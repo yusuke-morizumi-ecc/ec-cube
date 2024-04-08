@@ -25,6 +25,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
     public static $検索条件_仮会員 = ['id' => 'admin_search_customer_customer_status_1'];
     public static $検索条件_本会員 = ['id' => 'admin_search_customer_customer_status_2'];
     public static $検索条件_退会 = ['id' => 'admin_search_customer_customer_status_3'];
+    public static $ポイント = ['id' => 'admin_customer_point'];
 
     /**
      * CustomerListPage constructor.
@@ -104,12 +105,12 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
      */
     public function 一覧_削除($rowNum, $execute = true)
     {
-        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div > a");
-        $this->tester->waitForElementVisible("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.modal");
+        $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3 > div > div > a");
+        $this->tester->waitForElementVisible("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3 > div > div.modal");
         if ($execute) {
-            $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.modal a.btn-ec-delete");
+            $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3 > div > div.modal a.btn-ec-delete");
         } else {
-            $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pr-3 > div > div.modal button.btn-ec-sub");
+            $this->tester->click("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pe-3 > div > div.modal button.btn-ec-sub");
         }
 
         return $this;
@@ -124,8 +125,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
         $this->tester->wait(5);
         if ($execute) {
             $this->tester->click('送信');
-        }
-        else {
+        } else {
             $this->tester->click('キャンセル');
         }
 
@@ -141,14 +141,14 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
 
     public function CSVダウンロード()
     {
-        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-right > div:nth-child(2) > div > a:nth-child(1)');
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-end > div:nth-child(2) > div > a:nth-child(1)');
 
         return $this;
     }
 
     public function CSV出力項目設定()
     {
-        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-right > div:nth-child(2) > div > a:nth-child(2)');
+        $this->tester->click('#search_form > div.c-contentsArea__cols > div > div > div.row.justify-content-between.mb-2 > div.col-5.text-end > div:nth-child(2) > div > a:nth-child(2)');
     }
 
     /**
@@ -156,7 +156,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
      */
     public function 一覧_会員ID($rowNum)
     {
-        return $this->tester->grabTextFrom("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.pl-3");
+        return $this->tester->grabTextFrom("#search_form > div.c-contentsArea__cols > div > div > div.card.rounded.border-0.mb-4 > div > table > tbody > tr:nth-child(${rowNum}) > td.align-middle.ps-3");
     }
 
     public function assertSortedIdList($order)
@@ -175,7 +175,7 @@ class CustomerManagePage extends AbstractAdminPageStyleGuide
 
     public function assertSortedNameList($order)
     {
-        $values = array_map(function($s) {
+        $values = array_map(function ($s) {
             // 一覧の会員名の文字列から姓だけを抽出
             return preg_replace('/ .*$/', '', $s);
         }, $this->tester->grabMultiple('.c-contentsArea__primaryCol tr > td:nth-child(2)'));
