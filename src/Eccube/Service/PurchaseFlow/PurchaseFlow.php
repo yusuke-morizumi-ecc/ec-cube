@@ -225,51 +225,65 @@ class PurchaseFlow
         }
     }
 
-    public function addPurchaseProcessor(PurchaseProcessor $processor)
+    public function addPurchaseProcessor(PurchaseProcessor $purchaseProcessor)
     {
-        if (false === $this->purchaseProcessors->contains($processor)) {
-            $this->purchaseProcessors[] = $processor;
+        if (0 === $this->purchaseProcessors->filter(function ($processor) use ($purchaseProcessor) {
+            return get_class($processor) === get_class($purchaseProcessor);
+        })->count()) {
+            $this->purchaseProcessors[] = $purchaseProcessor;
         }
     }
 
     public function addItemHolderPreprocessor(ItemHolderPreprocessor $holderPreprocessor)
     {
-        if (false === $this->itemHolderPreprocessors->contains($holderPreprocessor)) {
+        if (0 === $this->itemHolderPreprocessors->filter(function ($processor) use ($holderPreprocessor) {
+            return get_class($processor) === get_class($holderPreprocessor);
+        })->count()) {
             $this->itemHolderPreprocessors[] = $holderPreprocessor;
         }
     }
 
     public function addItemPreprocessor(ItemPreprocessor $itemPreprocessor)
     {
-        if (false === $this->itemPreprocessors->contains($itemPreprocessor)) {
+        if (0 === $this->itemPreprocessors->filter(function ($processor) use ($itemPreprocessor) {
+            return get_class($processor) === get_class($itemPreprocessor);
+        })->count()) {
             $this->itemPreprocessors[] = $itemPreprocessor;
         }
     }
 
     public function addItemValidator(ItemValidator $itemValidator)
     {
-        if (false === $this->itemValidators->contains($itemValidator)) {
+        if (0 === $this->itemValidators->filter(function ($processor) use ($itemValidator) {
+            return get_class($processor) === get_class($itemValidator);
+        })->count()) {
             $this->itemValidators[] = $itemValidator;
         }
     }
 
     public function addItemHolderValidator(ItemHolderValidator $itemHolderValidator)
     {
-        if (false === $this->itemHolderValidators->contains($itemHolderValidator)) {
+        if (0 === $this->itemHolderValidators->filter(function ($processor) use ($itemHolderValidator) {
+            return get_class($processor) === get_class($itemHolderValidator);
+        })->count()) {
             $this->itemHolderValidators[] = $itemHolderValidator;
         }
     }
 
     public function addItemHolderPostValidator(ItemHolderPostValidator $itemHolderValidator)
     {
-        if (false === $this->itemHolderPostValidators->contains($itemHolderValidator)) {
+        if (0 === $this->itemHolderPostValidators->filter(function ($processor) use ($itemHolderValidator) {
+            return get_class($processor) === get_class($itemHolderValidator);
+        })->count()) {
             $this->itemHolderPostValidators[] = $itemHolderValidator;
         }
     }
 
     public function addDiscountProcessor(DiscountProcessor $discountProcessor)
     {
-        if (false === $this->discountProcessors->contains($discountProcessor)) {
+        if (0 === $this->discountProcessors->filter(function ($processor) use ($discountProcessor) {
+            return get_class($processor) === get_class($discountProcessor);
+        })->count()) {
             $this->discountProcessors[] = $discountProcessor;
         }
     }
@@ -398,7 +412,7 @@ class PurchaseFlow
             return get_class($processor);
         };
         $flows = [
-            0 => $this->flowType . ' flow',
+            0 => $this->flowType.' flow',
             'ItemValidator' => $this->itemValidators->map($callback)->toArray(),
             'ItemHolderValidator' => $this->itemHolderValidators->map($callback)->toArray(),
             'ItemPreprocessor' => $this->itemPreprocessors->map($callback)->toArray(),
@@ -415,9 +429,9 @@ class PurchaseFlow
         $out = '';
         foreach ($tree as $key => $value) {
             if (is_numeric($key)) {
-                $out .= $value . PHP_EOL;
+                $out .= $value.PHP_EOL;
             } else {
-                $out .= $key . PHP_EOL;
+                $out .= $key.PHP_EOL;
             }
         }
 
