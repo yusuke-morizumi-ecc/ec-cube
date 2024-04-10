@@ -949,11 +949,7 @@ class CsvImportController extends AbstractCsvImportController
                             $ClassName->setName(StringUtil::trimAll($row[$headerByKey['name']]));
                         }
 
-                        if (!isset($row[$headerByKey['backend_name']]) || StringUtil::isBlank($row[$headerByKey['backend_name']])) {
-                            $this->addErrors(($data->key() + 1).'行目規格名が設定されていません。');
-
-                            return $this->renderWithError($form, $headers);
-                        } else {
+                        if (isset($row[$headerByKey['backend_name']]) && StringUtil::isNotBlank($row[$headerByKey['backend_name']])) {
                             $ClassName->setBackendName(StringUtil::trimAll($row[$headerByKey['backend_name']]));
                         }
 
@@ -979,7 +975,7 @@ class CsvImportController extends AbstractCsvImportController
 
 
     /**
-     * カテゴリ登録CSVアップロード
+     * 規格分類CSV登録CSVアップロード
      *
      * @Route("/%eccube_admin_route%/product/class_category_csv_upload", name="admin_product_class_category_csv_import")
      * @Template("@admin/Product/csv_class_category.twig")
@@ -1089,12 +1085,8 @@ class CsvImportController extends AbstractCsvImportController
                             $ClassCategory->setName(StringUtil::trimAll($row[$headerByKey['name']]));
                         }
 
-                        if (!isset($row[$headerByKey['backend_name']]) || StringUtil::isBlank($row[$headerByKey['backend_name']])) {
-                            $this->addErrors(($data->key() + 1).'行目規格分類管理名が設定されていません。');
-
-                            return $this->renderWithError($form, $headers);
-                        } else {
-                            $ClassCategory->setBackendName(StringUtil::trimAll($row[$headerByKey['backend_name']]));
+                        if (isset($row[$headerByKey['backend_name']]) && StringUtil::isNotBlank($row[$headerByKey['backend_name']])) {
+                            $ClassName->setBackendName(StringUtil::trimAll($row[$headerByKey['backend_name']]));
                         }
 
                         if ($this->hasErrors()) {
