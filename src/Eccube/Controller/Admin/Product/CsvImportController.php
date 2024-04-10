@@ -1086,7 +1086,7 @@ class CsvImportController extends AbstractCsvImportController
                         }
 
                         if (isset($row[$headerByKey['backend_name']]) && StringUtil::isNotBlank($row[$headerByKey['backend_name']])) {
-                            $ClassName->setBackendName(StringUtil::trimAll($row[$headerByKey['backend_name']]));
+                            $ClassCategory->setBackendName(StringUtil::trimAll($row[$headerByKey['backend_name']]));
                         }
 
                         if ($this->hasErrors()) {
