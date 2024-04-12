@@ -22,6 +22,7 @@ use Eccube\Service\PurchaseFlow\PurchaseContext;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Compiler\PriorityTaggedServiceTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Reference;
 
 class PurchaseFlowPass implements CompilerPassInterface
@@ -48,13 +49,18 @@ class PurchaseFlowPass implements CompilerPassInterface
          * purchaseflow.yamlに定義を追加した場合の処理
          */
         foreach ($this->getProcessorTags() as $tag => $methodName) {
+            /** @var Reference $id */
             foreach ($this->findAndSortTaggedServices($tag, $container) as $id) {
                 $def = $container->findDefinition($id);
                 foreach ($def->getTag($tag) as $attributes) {
                     if (isset($attributes['flow_type'])) {
+                        /**
+                         * @var string $flowType
+                         * @var Definition $purchaseFlowDef
+                         */
                         foreach ($flowTypes as $flowType => $purchaseFlowDef) {
                             if ($flowType === $attributes['flow_type']) {
-                                $purchaseFlowDef->addMethodCall($methodName, [new Reference($id)]);
+                                $purchaseFlowDef->addMethodCall($methodName, [$id]);
                             }
                         }
                     }
@@ -76,13 +82,17 @@ class PurchaseFlowPass implements CompilerPassInterface
          * アノテーションで追加対象のフローを指定した場合の処理
          */
         foreach ($this->getProcessorTags() as $tag => $methodName) {
-            $ids = $container->findTaggedServiceIds($tag);
-            foreach ($ids as $id => $tags) {
+            /** @var Reference $id */
+            foreach ($this->findAndSortTaggedServices($tag, $container) as $id) {
                 $def = $container->getDefinition($id);
+                /**
+                 * @var string $annotationName
+                 * @var Definition $purchaseFlowDef
+                 */
                 foreach ($flowDefs as $annotationName => $purchaseFlowDef) {
                     $anno = $reader->getClassAnnotation(new \ReflectionClass($def->getClass()), $annotationName);
                     if ($anno) {
-                        $purchaseFlowDef->addMethodCall($methodName, [new Reference($id)]);
+                        $purchaseFlowDef->addMethodCall($methodName, [$id]);
                         $purchaseFlowDef->setPublic(true);
                     }
                 }

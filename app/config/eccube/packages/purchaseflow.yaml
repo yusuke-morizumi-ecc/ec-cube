@@ -50,7 +50,7 @@ services:
         tags:
             - { name: eccube.item.validator, flow_type: cart, priority: 600 }
 
-    eccube.purchase.flow.item.validator.class_category.validator: # 販売制限数のチェック
+    eccube.purchase.flow.item.validator.class_category.validator: # 商品規格の公開状態チェック
         class: Eccube\Service\PurchaseFlow\Processor\ClassCategoryValidator
         tags:
             - { name: eccube.item.validator, flow_type: cart, priority: 500 }
