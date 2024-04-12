@@ -15,6 +15,8 @@ use Codeception\Util\Fixtures;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManager;
 use Page\Admin\CategoryCsvUploadPage;
+use Page\Admin\ClassNameCsvUploadPage;
+use Page\Admin\ClassCategoryCsvUploadPage;
 use Page\Admin\CategoryManagePage;
 use Page\Admin\ClassCategoryManagePage;
 use Page\Admin\ClassNameManagePage;
@@ -870,6 +872,92 @@ class EA03ProductCest
         CategoryCsvUploadPage::go($I)->雛形ダウンロード();
         $CategoryTemplateCSV = $I->getLastDownloadFile('/^category\.csv$/');
         $I->assertEquals(1, count(file($CategoryTemplateCSV)), 'ヘッダ行だけのファイル');
+    }
+
+    public function product_規格CSV登録(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC02-T01 規格CSV登録');
+
+        ClassNameManagePage::go($I);
+        $I->dontSeeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロード規格")]']);
+
+        ClassNameCsvUploadPage::go($I)
+            ->入力_CSVファイル('class_name.csv')
+            ->CSVアップロード();
+
+        $I->see('CSVファイルをアップロードしました', ClassNameCsvUploadPage::$完了メッセージ);
+
+        ClassNameManagePage::go($I);
+
+        $I->seeElement(['xpath' => ClassNameManagePage::XPathでタグを取得する('アップロード規格1')]);
+        $I->seeElement(['xpath' => ClassNameManagePage::XPathでタグを取得する('アップロード規格2')]);
+        $I->seeElement(['xpath' => ClassNameManagePage::XPathでタグを取得する('アップロード規格3')]);
+
+        // アップロード失敗 (フォーマットの異なるcsvをアップロードする)
+        ClassNameCsvUploadPage::go($I)
+            ->入力_CSVファイル('product.csv')
+            ->CSVアップロード();
+        $I->see('CSVのフォーマットが一致しません', '#upload-form');
+    }
+
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_規格CSV登録雛形ファイルダウンロード(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC02-T02 規格CSV登録雛形ファイルダウンロード');
+
+        // 雛形のダウンロード
+        ClassNameCsvUploadPage::go($I)->雛形ダウンロード();
+        $ClassNameTemplateCSV = $I->getLastDownloadFile('/^class_name\.csv$/');
+        $I->assertEquals(1, count(file($ClassNameTemplateCSV)), 'ヘッダ行だけのファイル');
+    }
+
+    public function product_規格分類CSV登録(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC03-T01 規格分類CSV登録');
+
+        ClassNameManagePage::go($I)
+            ->一覧_分類登録(3);
+
+        ClassCategoryManagePage::at($I);
+        $I->dontSeeElement(['xpath' => '//div[@id="sortable_list_box"]//a[contains(text(), "アップロード規格分類")]']);
+
+        ClassCategoryCsvUploadPage::go($I)
+            ->入力_CSVファイル('class_category.csv')
+            ->CSVアップロード();
+
+        $I->see('CSVファイルをアップロードしました', ClassCategoryCsvUploadPage::$完了メッセージ);
+
+        ClassNameManagePage::go($I)
+            ->一覧_分類登録2();
+
+        ClassCategoryManagePage::at($I);
+
+        $I->seeElement(['xpath' => ClassCategoryManagePage::XPathでタグを取得する('アップロード規格分類1')]);
+        $I->seeElement(['xpath' => ClassCategoryManagePage::XPathでタグを取得する('アップロード規格分類2')]);
+        $I->seeElement(['xpath' => ClassCategoryManagePage::XPathでタグを取得する('アップロード規格分類3')]);
+
+        // アップロード失敗 (フォーマットの異なるcsvをアップロードする)
+        ClassCategoryCsvUploadPage::go($I)
+            ->入力_CSVファイル('product.csv')
+            ->CSVアップロード();
+        $I->see('CSVのフォーマットが一致しません', '#upload-form');
+    }
+
+    /**
+     * @env firefox
+     * @env chrome
+     */
+    public function product_規格分類CSV登録雛形ファイルダウンロード(AcceptanceTester $I)
+    {
+        $I->wantTo('EA0307-UC03-T02 規格分類CSV登録雛形ファイルダウンロード');
+
+        // 雛形のダウンロード
+        ClassCategoryCsvUploadPage::go($I)->雛形ダウンロード();
+        $ClassCategoryTemplateCSV = $I->getLastDownloadFile('/^class_category\.csv$/');
+        $I->assertEquals(1, count(file($ClassCategoryTemplateCSV)), 'ヘッダ行だけのファイル');
     }
 
     public function product_タグ登録(AcceptanceTester $I)
