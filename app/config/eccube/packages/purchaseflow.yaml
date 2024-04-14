@@ -140,7 +140,7 @@ services:
             - '@Eccube\Repository\Master\TaxDisplayTypeRepository'
             - '@Eccube\Repository\Master\TaxTypeRepository'
         tags:
-            - { name: eccube.item.holder.preprocessor, flow_type: shopping, priority: 500 }
+            - { name: eccube.item.holder.preprocessor, flow_type: shopping, priority: 600 }
 
     eccube.purchase.flow.item.holder.preprocessor.tax.processor.after: # 税額の計算(送料明細・手数料明細に対して税額を計算)
         class: Eccube\Service\PurchaseFlow\Processor\TaxProcessor
@@ -150,7 +150,7 @@ services:
             - '@Eccube\Service\TaxRuleService'
             - '@Eccube\Service\OrderHelper'
         tags:
-            - { name: eccube.item.holder.preprocessor, flow_type: shopping, priority: 400 }
+            - { name: eccube.item.holder.preprocessor, flow_type: shopping, priority: 500 }
 
     # addDiscountProcessor
     eccube.purchase.flow.discount.processor.point.processor:
@@ -218,7 +218,7 @@ services:
             - { name: eccube.item.holder.post.validator, flow_type: shopping, priority: 300 }
 
     # addPurchaseProcessor
-    eccybe.purchase.flow.purchase.processor.pre.order.id.validator:
+    eccube.purchase.flow.purchase.processor.pre.order.id.validator:
         class: Eccube\Service\PurchaseFlow\Processor\PreOrderIdValidator
         arguments:
             - '@Eccube\Service\CartService'
