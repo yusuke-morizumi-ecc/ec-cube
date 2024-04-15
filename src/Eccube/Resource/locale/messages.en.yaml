@@ -1236,11 +1236,16 @@ admin.setting.shop.tax.apply_date.available_error: The same date and time cannot
 
 admin.setting.shop.mail.mail_template_edit: Edit Templates
 admin.setting.shop.mail.mail_template: Template
+admin.setting.shop.mail.mail_template_name: Template name
+admin.setting.shop.mail.mail_file_name: File name
 admin.setting.shop.mail.mail_subject: Title
 admin.setting.shop.mail.mail_body: Body
 admin.setting.shop.mail.mail_text: Text
 admin.setting.shop.mail.mail_html: HTML
 admin.setting.shop.mail.preview: Preview
+admin.setting.shop.mail.file_exists: This file name is already in use.
+admin.setting.shop.mail.delete__confirm_title: Delete a mail template
+admin.setting.shop.mail.delete__confirm_message: Are you sure to delete this mail template?
 
 #------------------------------------------------------------------------------------
 # Settings : Store Settings : CSV Outputs

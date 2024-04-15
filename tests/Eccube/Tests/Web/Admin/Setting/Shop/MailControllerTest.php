@@ -80,6 +80,7 @@ class MailControllerTest extends AbstractAdminWebTestCase
         $MailTemplate = $this->createMail();
         $form = [
             '_token' => 'dummy',
+            'name' => $MailTemplate->getName(),
             'template' => $MailTemplate->getId(),
             'mail_subject' => 'Test Subject',
             'tpl_data' => 'Test TPL Data',
@@ -106,6 +107,7 @@ class MailControllerTest extends AbstractAdminWebTestCase
         $MailTemplate = $this->createMail();
         $form = [
             '_token' => 'dummy',
+            'name' => $MailTemplate->getName(),
             'template' => $MailTemplate->getId(),
             'mail_subject' => 'Test Subject',
             'tpl_data' => 'Test TPL Data',
@@ -133,18 +135,16 @@ class MailControllerTest extends AbstractAdminWebTestCase
             'template' => $mid,
             'mail_subject' => 'Test Subject',
         ];
-        $this->client->request(
+        $crawler = $this->client->request(
             'POST',
             $this->generateUrl('admin_setting_shop_mail_edit', ['id' => $mid]),
             ['mail' => $form]
         );
 
-        $redirectUrl = $this->generateUrl('admin_setting_shop_mail');
-        $this->assertTrue($this->client->getResponse()->isRedirect($redirectUrl));
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
 
-        $crawler = $this->client->followRedirect();
-        $this->actual = $crawler->filter('div.alert')->text();
-        $this->expected = trans('admin.common.save_error');
+        $this->actual = $crawler->filter('span.form-error-message')->text();
+        $this->expected = '選択した値は無効です。';
         $this->verify();
     }
 
@@ -158,13 +158,15 @@ class MailControllerTest extends AbstractAdminWebTestCase
             'template' => null,
             'mail_subject' => null,
         ];
-        $this->client->request(
+        $crawler = $this->client->request(
             'POST',
             $this->generateUrl('admin_setting_shop_mail'),
             ['mail' => $form]
         );
 
-        $redirectUrl = $this->generateUrl('admin_setting_shop_mail');
-        $this->assertTrue($this->client->getResponse()->isRedirect($redirectUrl));
+        $this->assertTrue($this->client->getResponse()->isSuccessful());
+        $this->actual = $crawler->filter('span.form-error-message')->text();
+        $this->expected = '入力されていません。';
+        $this->verify();
     }
 }

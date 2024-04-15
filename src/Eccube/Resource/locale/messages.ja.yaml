@@ -1236,11 +1236,16 @@ admin.setting.shop.tax.apply_date.available_error: 同時刻の適用日時を�
 
 admin.setting.shop.mail.mail_template_edit: テンプレート編集
 admin.setting.shop.mail.mail_template: テンプレート
+admin.setting.shop.mail.mail_template_name: テンプレート名
+admin.setting.shop.mail.mail_file_name: ファイル名
 admin.setting.shop.mail.mail_subject: 件名
 admin.setting.shop.mail.mail_body: 本文
 admin.setting.shop.mail.mail_text: テキスト
 admin.setting.shop.mail.mail_html: HTML
 admin.setting.shop.mail.preview: プレビュー
+admin.setting.shop.mail.file_exists: このファイル名はすでに使用されています。
+admin.setting.shop.mail.delete__confirm_title: メールテンプレートを削除します。
+admin.setting.shop.mail.delete__confirm_message: メールテンプレートを削除してよろしいですか？
 
 #------------------------------------------------------------------------------------
 # 設定：店舗設定：CSV出力項目設定
