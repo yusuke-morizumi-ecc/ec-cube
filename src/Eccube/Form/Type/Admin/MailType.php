@@ -106,8 +106,6 @@ class MailType extends AbstractType
                 } else {
                     $data->setFileName('Mail/'.$data->getFileName().'.twig');
                 }
-
-                $data->setDeletable(true);
             }
         });
 
