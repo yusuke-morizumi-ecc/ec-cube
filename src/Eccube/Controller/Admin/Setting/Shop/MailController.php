@@ -97,6 +97,7 @@ class MailController extends AbstractController
 
             if ($form->isSubmitted() && $form->isValid()) {
                 $Mail = $form->getData();
+                $Mail->setDeletable(true);
                 $this->entityManager->persist($Mail);
                 $this->entityManager->flush();
 
