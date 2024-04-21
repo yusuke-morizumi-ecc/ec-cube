@@ -15,11 +15,21 @@ namespace Eccube\Controller;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 class TopController extends AbstractController
 {
     /**
-     * @Route("/", name="homepage", methods={"GET"})
+     * @Route("/", name="dummy_homepage", methods={"GET"})
+     */
+    public function dummyIndex(Request $request)
+    {
+        $locale = $request->getLocale() ?? env('ECCUBE_LOCALE');
+        return $this->redirectToRoute('homepage', ['_locale' => $locale]);
+    }
+
+    /**
+     * @Route("/{_locale<%app.supported_locales%>}", name="homepage", methods={"GET"})
      * @Template("index.twig")
      */
     public function index()

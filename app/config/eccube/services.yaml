@@ -3,6 +3,7 @@
 parameters:
     # container parameters
     container.dumper.inline_class_loader: true
+    app.supported_locales: 'ja|en'
 
     # ec-cube parameters
     env(ECCUBE_LOCALE): 'ja'

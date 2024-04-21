@@ -108,7 +108,7 @@ class ProductController extends AbstractController
     /**
      * 商品一覧画面.
      *
-     * @Route("/products/list", name="product_list", methods={"GET"})
+     * @Route("/{_locale<%app.supported_locales%>}/products/list", name="product_list", methods={"GET"})
      * @Template("Product/list.twig")
      */
     public function index(Request $request, PaginatorInterface $paginator)
@@ -206,7 +206,7 @@ class ProductController extends AbstractController
     /**
      * 商品詳細画面.
      *
-     * @Route("/products/detail/{id}", name="product_detail", methods={"GET"}, requirements={"id" = "\d+"})
+     * @Route("/{_locale<%app.supported_locales%>}/products/detail/{id}", name="product_detail", methods={"GET"}, requirements={"id" = "\d+"})
      * @Template("Product/detail.twig")
      * @ParamConverter("Product", options={"repository_method" = "findWithSortedClassCategories"})
      *
