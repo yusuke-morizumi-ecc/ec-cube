@@ -26,7 +26,7 @@ if (!class_exists('\Eccube\Entity\Product')) {
      * @ORM\HasLifecycleCallbacks()
      * @ORM\Entity(repositoryClass="Eccube\Repository\ProductRepository")
      */
-    class Product extends \Eccube\Entity\AbstractEntity
+    class Product extends \Eccube\Entity\AbstractEntity implements Translatable
     {
         private $_calc = false;
         private $stockFinds = [];
@@ -1072,6 +1072,20 @@ if (!class_exists('\Eccube\Entity\Product')) {
         public function getStatus()
         {
             return $this->Status;
+        }
+
+        public function getTranslatedProperty(string $propertyName, string $locale):string {
+            if ($propertyName == 'description_detail') {
+                if ($locale == "jp") {
+                    $detail = $this->getDescriptionDetail();
+                } else {
+                    $detail = "EN " . $this->getDescriptionDetail() . " EN";
+                }
+            } else {
+                $detail = "hoge";
+            }
+
+            return strtoupper($detail);
         }
     }
 }

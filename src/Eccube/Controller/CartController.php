@@ -73,7 +73,7 @@ class CartController extends AbstractController
     /**
      * カート画面.
      *
-     * @Route("/cart", name="cart", methods={"GET"})
+     * @Route("/{_locale<%app.supported_locales%>}/cart", name="cart", methods={"GET"})
      * @Template("Cart/index.twig")
      */
     public function index(Request $request)
